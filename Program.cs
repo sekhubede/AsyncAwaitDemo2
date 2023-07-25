@@ -77,7 +77,7 @@ internal static class AsyncExecute
     {
         var watch = Stopwatch.StartNew();
 
-        await RunDownloadAsync();
+        await RunDownloadParallelAsync();
 
         watch.Stop();
 
@@ -98,6 +98,11 @@ internal static class AsyncExecute
         }
 
         var results = await Task.WhenAll(tasks);
+
+        foreach(var item in results)
+        {
+            ReportWebsiteInfo(item);
+        }
     }
 
     private static async Task RunDownloadAsync()
